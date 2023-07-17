@@ -6,4 +6,7 @@
 body {
   margin: 0;
   font-family: 'Satoshi Variable', sans-serif;
+  background-image: url('./assets/images/Background.png');
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
 }
