@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import TodoForm from '../components/TodoForm';
+import TodoList from '../components/TodoList';
 
 const MainPage = () => {
   return (
@@ -17,6 +18,7 @@ const MainPage = () => {
         What will You do today?
       </Typography>
       <TodoForm />
+      <TodoList />
     </div>
   );
 };
