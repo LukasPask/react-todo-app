@@ -1,18 +1,17 @@
-import { addDoc, collection } from '@firebase/firestore';
-import { firestore } from './firebase_setup';
+import { doc, addDoc, collection, deleteDoc } from '@firebase/firestore';
+import { db } from './firebase_setup';
 
-const firebaseSubmit = (todos) => {
-  const ref = collection(firestore, 'todos'); // Firebase creates this automatically
-
-  let data = {
-    todos: todos,
-  };
+export const handleCreate = (todos) => {
+  const ref = collection(db, 'todos');
 
   try {
-    addDoc(ref, data);
+    addDoc(ref, todos);
   } catch (err) {
     console.log(err);
   }
 };
 
-export default firebaseSubmit;
+export const handleDelete = async (id) => {
+  const todoDocRef = doc(db, 'todos', id);
+  await deleteDoc(todoDocRef);
+};
