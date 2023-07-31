@@ -3,8 +3,8 @@ import {
   addDoc,
   collection,
   deleteDoc,
-  updateDoc,
   getDoc,
+  setDoc,
 } from '@firebase/firestore';
 import { db } from './firebase_setup';
 
@@ -23,9 +23,9 @@ export const handleUpdateToDone = async (id) => {
   const todoDocRef = doc(db, 'todos', id);
   const isTargetTodoCompleted = (await getDoc(todoDocRef)).data().isCompleted;
   if (isTargetTodoCompleted) {
-    await updateDoc(todoDocRef, { isCompleted: false });
+    setDoc(todoDocRef, { isCompleted: false }, { merge: true });
   }
   if (!isTargetTodoCompleted) {
-    await updateDoc(todoDocRef, { isCompleted: true });
+    setDoc(todoDocRef, { isCompleted: true }, { merge: true });
   }
 };

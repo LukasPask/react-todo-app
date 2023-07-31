@@ -6,6 +6,7 @@ import {
   onSnapshot,
   orderBy,
   where,
+  getDocs,
 } from 'firebase/firestore';
 import { db } from '../firebase/firebase_setup';
 import { Box, Button, List } from '@mui/material';
@@ -19,14 +20,26 @@ interface ITodo {
 const TodoList = () => {
   const [todos, setTodos] = useState<any>([]);
 
-  const getTodos = async (customQuery: any) => {
+  useEffect(() => {
     const todosRef = collection(db, 'todos');
     const defaultCollectionQuery = query(
       todosRef,
+      orderBy('isCompleted'),
       orderBy('doneByDate', 'asc')
     );
-    const collectionQuery = customQuery ?? defaultCollectionQuery;
-    onSnapshot(collectionQuery, (querySnapshot: any) => {
+    const collectionQuery = defaultCollectionQuery;
+    const unsubscribe = onSnapshot(collectionQuery, (querySnapshot: any) => {
+      const todosArray = querySnapshot.docs.map((item: any) => ({
+        id: item.id,
+        ...item.data(),
+      }));
+      setTodos(todosArray);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const getFilteredTodos = (queryFilters: any) => {
+    onSnapshot(queryFilters, (querySnapshot: any) => {
       const todosArray = querySnapshot.docs.map((item: any) => ({
         id: item.id,
         ...item.data(),
@@ -35,7 +48,7 @@ const TodoList = () => {
     });
   };
 
-  const getFilteredTodos = async (argument: string) => {
+  const filterTodos = async (argument: string) => {
     if (argument === 'completed') {
       const todosRef = collection(db, 'todos');
       const collectionQueryForCompletedTodos = query(
@@ -44,7 +57,7 @@ const TodoList = () => {
         orderBy('isCompleted'),
         where('isCompleted', '==', true)
       );
-      getTodos(collectionQueryForCompletedTodos);
+      getFilteredTodos(collectionQueryForCompletedTodos);
     }
     if (argument === 'notCompleted') {
       const todosRef = collection(db, 'todos');
@@ -54,13 +67,24 @@ const TodoList = () => {
         orderBy('isCompleted'),
         where('isCompleted', '==', false)
       );
-      getTodos(collectionQueryForNotCompletedTodos);
+      getFilteredTodos(collectionQueryForNotCompletedTodos);
     }
   };
 
-  useEffect(() => {
-    getTodos(null);
-  }, []);
+  const getTodos = async () => {
+    const todosRef = collection(db, 'todos');
+    const todosQuery = query(
+      todosRef,
+      orderBy('isCompleted'),
+      orderBy('doneByDate', 'asc')
+    );
+    const querySnapshot = await getDocs(todosQuery);
+    const todosArray = querySnapshot.docs.map((item: any) => ({
+      id: item.id,
+      ...item.data(),
+    }));
+    setTodos(todosArray);
+  };
 
   return (
     <Box
@@ -79,19 +103,13 @@ const TodoList = () => {
           width: '25rem',
         }}
       >
-        <Button onClick={() => getTodos(null)} variant='contained'>
+        <Button onClick={() => getTodos()} variant='contained'>
           All
         </Button>
-        <Button
-          onClick={() => getFilteredTodos('completed')}
-          variant='contained'
-        >
+        <Button onClick={() => filterTodos('completed')} variant='contained'>
           Completed
         </Button>
-        <Button
-          onClick={() => getFilteredTodos('notCompleted')}
-          variant='contained'
-        >
+        <Button onClick={() => filterTodos('notCompleted')} variant='contained'>
           Not completed
         </Button>
       </div>

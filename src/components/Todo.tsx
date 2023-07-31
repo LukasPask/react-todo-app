@@ -40,18 +40,21 @@ const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
         secondaryAction={
           <>
             <IconButton
+              onClick={() => toggleEditModal()}
               sx={{ marginRight: '8px' }}
               edge='end'
               aria-label='edit'
             >
-              <AiOutlineEdit onClick={() => toggleEditModal()} />
+              <AiOutlineEdit />
             </IconButton>
-            <IconButton edge='end' aria-label='delete'>
-              <AiOutlineDelete
-                onClick={() => {
-                  handleDelete(id);
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                handleDelete(id);
+              }}
+              edge='end'
+              aria-label='delete'
+            >
+              <AiOutlineDelete />
             </IconButton>
           </>
         }
