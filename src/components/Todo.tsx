@@ -1,6 +1,8 @@
-import { IconButton, ListItem, ListItemText } from '@mui/material';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { handleDelete } from '../firebase/firebaseCall';
+import { Button, IconButton, ListItem, ListItemText } from '@mui/material';
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { handleDelete, handleUpdateToDone } from '../firebase/firebaseCall';
+import { useState } from 'react';
+import Modal from './Modal';
 
 interface ITodo {
   todoTitle: string;
@@ -10,6 +12,7 @@ interface ITodo {
 }
 
 const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
+  const [editModal, setEditModal] = useState<boolean>(false);
   const getDateWithoutOffset = (seconds: number) => {
     var newDate = new Date();
     newDate.setTime(seconds * 1000);
@@ -21,29 +24,68 @@ const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
     return dateWithoutTime;
   };
 
+  const isTodoLate = (todoDate: string) => {
+    const today = new Date().getTime() / 1000;
+    const todayWithoutOffset = getDateWithoutOffset(today);
+    return todayWithoutOffset > todoDate;
+  };
+
+  const toggleEditModal = () => {
+    setEditModal((prevState) => !prevState);
+  };
+
   return (
-    <ListItem
-      secondaryAction={
-        <IconButton edge='end' aria-label='delete'>
-          <AiOutlineDelete
-            onClick={(e) => {
-              handleDelete(id);
-            }}
-          />
-        </IconButton>
-      }
-      sx={{
-        background: 'white',
-        maxWidth: '38.3125rem',
-        borderRadius: '0.5rem',
-        marginBottom: '0.5rem',
-      }}
-    >
-      <ListItemText
-        primary={todoTitle}
-        secondary={getDateWithoutOffset(doneByDate.seconds)}
+    <>
+      <ListItem
+        secondaryAction={
+          <>
+            <IconButton
+              sx={{ marginRight: '8px' }}
+              edge='end'
+              aria-label='edit'
+            >
+              <AiOutlineEdit onClick={() => toggleEditModal()} />
+            </IconButton>
+            <IconButton edge='end' aria-label='delete'>
+              <AiOutlineDelete
+                onClick={() => {
+                  handleDelete(id);
+                }}
+              />
+            </IconButton>
+          </>
+        }
+        sx={{
+          background: 'white',
+          border: isTodoLate(getDateWithoutOffset(doneByDate.seconds))
+            ? '1px solid red'
+            : 'none',
+          opacity: isTodoCompleted ? '0.3' : '1',
+          maxWidth: '38.3125rem',
+          borderRadius: '0.5rem',
+          marginBottom: '0.5rem',
+        }}
+      >
+        <ListItemText
+          sx={{ '&:hover': { cursor: 'pointer' } }}
+          onClick={() => handleUpdateToDone(id)}
+          primary={todoTitle}
+          secondary={getDateWithoutOffset(doneByDate.seconds)}
+        />
+      </ListItem>
+      <Modal
+        isOpen={editModal}
+        handleClose={toggleEditModal}
+        title='Edit Todo'
+        content={<>Do you want to edit this todo?</>}
+        actions={
+          <>
+            <Button onClick={toggleEditModal}>Cancel</Button>
+            <Button>Save</Button>
+          </>
+        }
       />
-    </ListItem>
+    </>
   );
 };
 
