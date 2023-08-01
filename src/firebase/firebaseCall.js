@@ -4,7 +4,7 @@ import {
   collection,
   deleteDoc,
   getDoc,
-  setDoc,
+  updateDoc,
 } from '@firebase/firestore';
 import { db } from './firebase_setup';
 
@@ -23,9 +23,9 @@ export const handleUpdateToDone = async (id) => {
   const todoDocRef = doc(db, 'todos', id);
   const isTargetTodoCompleted = (await getDoc(todoDocRef)).data().isCompleted;
   if (isTargetTodoCompleted) {
-    setDoc(todoDocRef, { isCompleted: false }, { merge: true });
+    updateDoc(todoDocRef, { isCompleted: false });
   }
   if (!isTargetTodoCompleted) {
-    setDoc(todoDocRef, { isCompleted: true }, { merge: true });
+    updateDoc(todoDocRef, { isCompleted: true });
   }
 };
