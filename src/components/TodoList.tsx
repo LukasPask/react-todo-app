@@ -38,14 +38,13 @@ const TodoList = () => {
     return () => unsubscribe();
   }, []);
 
-  const getFilteredTodos = (queryFilters: any) => {
-    onSnapshot(queryFilters, (querySnapshot: any) => {
-      const todosArray = querySnapshot.docs.map((item: any) => ({
-        id: item.id,
-        ...item.data(),
-      }));
-      setTodos(todosArray);
-    });
+  const getFilteredTodos = async (queryFilters: any) => {
+    const querySnapshot = await getDocs(queryFilters);
+    const todosArray = querySnapshot.docs.map((item: any) => ({
+      id: item.id,
+      ...item.data(),
+    }));
+    setTodos(todosArray);
   };
 
   const filterTodos = async (argument: string) => {
