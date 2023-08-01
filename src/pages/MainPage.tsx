@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import TodoForm from '../components/TodoForm';
-import TodoList from '../components/TodoList';
+import TodoForm from '../components/Forms/TodoForm';
+import TodoList from '../components/Todos/TodoList';
 
 const MainPage = () => {
   return (

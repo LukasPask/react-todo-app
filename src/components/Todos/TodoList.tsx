@@ -8,7 +8,7 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore';
-import { db } from '../firebase/firebase_setup';
+import { db } from '../../firebase/firebase_setup';
 import { Box, Button, List } from '@mui/material';
 interface ITodo {
   todoTitle: string;
@@ -19,6 +19,7 @@ interface ITodo {
 
 const TodoList = () => {
   const [todos, setTodos] = useState<any>([]);
+  const [filterIsActive, setFilterIsActive] = useState('all');
 
   useEffect(() => {
     const todosRef = collection(db, 'todos');
@@ -48,6 +49,8 @@ const TodoList = () => {
   };
 
   const filterTodos = async (argument: string) => {
+    setFilterIsActive(argument);
+
     if (argument === 'completed') {
       const todosRef = collection(db, 'todos');
       const collectionQueryForCompletedTodos = query(
@@ -71,6 +74,7 @@ const TodoList = () => {
   };
 
   const getTodos = async () => {
+    setFilterIsActive('all');
     const todosRef = collection(db, 'todos');
     const todosQuery = query(
       todosRef,
@@ -102,13 +106,22 @@ const TodoList = () => {
           width: '25rem',
         }}
       >
-        <Button onClick={() => getTodos()} variant='contained'>
+        <Button
+          onClick={() => getTodos()}
+          variant={filterIsActive === 'all' ? 'contained' : 'outlined'}
+        >
           All
         </Button>
-        <Button onClick={() => filterTodos('completed')} variant='contained'>
+        <Button
+          onClick={() => filterTodos('completed')}
+          variant={filterIsActive === 'completed' ? 'contained' : 'outlined'}
+        >
           Completed
         </Button>
-        <Button onClick={() => filterTodos('notCompleted')} variant='contained'>
+        <Button
+          onClick={() => filterTodos('notCompleted')}
+          variant={filterIsActive === 'notCompleted' ? 'contained' : 'outlined'}
+        >
           Not completed
         </Button>
       </div>

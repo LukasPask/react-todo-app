@@ -1,7 +1,7 @@
 import { Button, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import { displayNotification } from '../helpers/Notification';
-import { handleCreate } from '../firebase/firebaseCall';
+import { displayNotification } from '../../helpers/Notification';
+import { handleCreate } from '../../firebase/todoApi';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -28,12 +28,12 @@ const TodoForm = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
         margin: '2rem auto',
-        maxWidth: '38.3125rem',
+        maxWidth: '42rem',
       }}
       onSubmit={handleSubmit(onSubmit)}
     >
       <TextField
-        sx={{ backgroundColor: 'white' }}
+        sx={{ backgroundColor: 'white', width: '23rem', borderRadius: '4px' }}
         required
         label='Todo title'
         {...register('todoTitle')}
@@ -47,7 +47,11 @@ const TodoForm = () => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 minDate={dayjs(new Date())}
-                sx={{ backgroundColor: 'white' }}
+                sx={{
+                  backgroundColor: 'white',
+                  maxWidth: '10rem',
+                  borderRadius: '4px',
+                }}
                 label='Done by date'
                 format='YYYY-MM-DD'
                 value={dayjs(value)}

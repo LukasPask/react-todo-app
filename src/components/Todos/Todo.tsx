@@ -1,8 +1,9 @@
-import { Button, IconButton, ListItem, ListItemText } from '@mui/material';
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import { handleDelete, handleUpdateToDone } from '../firebase/firebaseCall';
 import { useState } from 'react';
-import Modal from './Modal';
+import { IconButton, ListItem, ListItemText } from '@mui/material';
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { handleDelete, handleUpdateToDone } from '../../firebase/todoApi';
+import Modal from '../Modals/Modal';
+import EditTodoForm from '../Forms/EditTodoForm';
 
 interface ITodo {
   todoTitle: string;
@@ -13,6 +14,7 @@ interface ITodo {
 
 const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
   const [editModal, setEditModal] = useState<boolean>(false);
+
   const getDateWithoutOffset = (seconds: number) => {
     var newDate = new Date();
     newDate.setTime(seconds * 1000);
@@ -64,7 +66,7 @@ const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
             ? '1px solid red'
             : 'none',
           opacity: isTodoCompleted ? '0.3' : '1',
-          maxWidth: '38.3125rem',
+          width: '42rem',
           borderRadius: '0.5rem',
           marginBottom: '0.5rem',
         }}
@@ -80,12 +82,14 @@ const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
         isOpen={editModal}
         handleClose={toggleEditModal}
         title='Edit Todo'
-        content={<>Do you want to edit this todo?</>}
-        actions={
-          <>
-            <Button onClick={toggleEditModal}>Cancel</Button>
-            <Button>Save</Button>
-          </>
+        content={
+          <EditTodoForm
+            handleClose={toggleEditModal}
+            todoTitle={todoTitle}
+            doneByDate={getDateWithoutOffset(doneByDate.seconds)}
+            isTodoCompleted={isTodoCompleted}
+            id={id}
+          />
         }
       />
     </>
