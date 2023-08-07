@@ -10,6 +10,9 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase/firebase_setup';
 import { Box, Button, List } from '@mui/material';
+
+import './index.scss';
+
 interface ITodo {
   todoTitle: string;
   doneByDate: { seconds: number; miliseconds: number };
@@ -90,22 +93,8 @@ const TodoList = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <div
-        style={{
-          marginBottom: '24px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '25rem',
-        }}
-      >
+    <Box className='main'>
+      <div className='main-filters'>
         <Button
           onClick={() => getTodos()}
           variant={filterIsActive === 'all' ? 'contained' : 'outlined'}
@@ -125,15 +114,7 @@ const TodoList = () => {
           Not completed
         </Button>
       </div>
-      <List
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          width: '50vw',
-        }}
-      >
+      <List className='main-list'>
         {todos.map(({ todoTitle, doneByDate, isCompleted, id }: ITodo) => (
           <Todo
             key={id}

@@ -5,6 +5,8 @@ import { handleDelete, handleUpdateToDone } from '../../firebase/todoApi';
 import Modal from '../Modals/Modal';
 import EditTodoForm from '../Forms/EditTodoForm';
 
+import './index.scss';
+
 interface ITodo {
   todoTitle: string;
   doneByDate: { seconds: number; miliseconds: number };
@@ -61,14 +63,10 @@ const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
           </>
         }
         sx={{
-          background: 'white',
           border: isTodoLate(getDateWithoutOffset(doneByDate.seconds))
             ? '1px solid red'
             : 'none',
           opacity: isTodoCompleted ? '0.3' : '1',
-          width: '42rem',
-          borderRadius: '0.5rem',
-          marginBottom: '0.5rem',
         }}
       >
         <ListItemText

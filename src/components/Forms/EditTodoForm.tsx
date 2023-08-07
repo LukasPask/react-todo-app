@@ -6,6 +6,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { displayNotification } from '../../helpers/Notification';
 import { handleUpdate } from '../../firebase/todoApi';
 import { Box } from '@mui/system';
+
+import './index.scss';
+
 interface ITodo {
   todoTitle: string;
   doneByDate: string;

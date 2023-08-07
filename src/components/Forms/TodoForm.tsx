@@ -8,6 +8,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'react-toastify/dist/ReactToastify.css';
 import dayjs from 'dayjs';
 
+import './index.scss';
+
 const TodoForm = () => {
   const { register, handleSubmit, control, reset } = useForm();
 
@@ -22,18 +24,9 @@ const TodoForm = () => {
   };
 
   return (
-    <form
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: '2rem auto',
-        maxWidth: '42rem',
-      }}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className='newTodoForm' onSubmit={handleSubmit(onSubmit)}>
       <TextField
-        sx={{ backgroundColor: 'white', width: '23rem', borderRadius: '4px' }}
+        className='newTodoForm-text'
         required
         label='Todo title'
         {...register('todoTitle')}
@@ -47,11 +40,7 @@ const TodoForm = () => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 minDate={dayjs(new Date())}
-                sx={{
-                  backgroundColor: 'white',
-                  maxWidth: '10rem',
-                  borderRadius: '4px',
-                }}
+                className='newTodoForm-datepicker'
                 label='Done by date'
                 format='YYYY-MM-DD'
                 value={dayjs(value)}
