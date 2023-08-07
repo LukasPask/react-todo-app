@@ -1,25 +1,25 @@
 .main {
-  display: 'flex';
-  justify-content: 'center';
-  align-items: 'center';
-  flex-direction: 'column';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   &-filters {
-    margin-bottom: '24px';
-    display: 'flex';
-    justify-content: 'space-between';
-    width: '25rem';
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    width: 25rem;
   }
   &-list {
-    display: 'flex';
-    justify-content: 'center';
-    align-items: 'center';
-    flex-direction: 'column';
-    width: '50vw';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50vw;
     &__item {
-      background: 'white';
-      width: '42rem';
-      border-radius: '0.5rem';
-      margin-bottom: '0.5rem';
+      background: white;
+      width: 42rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

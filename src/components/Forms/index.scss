@@ -1,19 +1,19 @@
 %inputs {
-  background-color: 'white';
-  border-radius: '4px';
+  background-color: white;
+  border-radius: 4px;
 }
 .newTodoForm {
-  display: 'flex';
-  align-items: 'center';
-  justify-content: 'space-between';
-  margin: '2rem auto';
-  max-width: '42rem';
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem auto;
+  max-width: 42rem;
   &-text {
     @extend %inputs;
-    width: '23rem';
+    width: 23rem;
   }
   &-datepicker {
     @extend %inputs;
-    max-width: '10rem';
+    max-width: 10rem;
   }
 }

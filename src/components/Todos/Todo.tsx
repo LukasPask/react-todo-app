@@ -62,6 +62,7 @@ const Todo = ({ todoTitle, doneByDate, isTodoCompleted, id }: ITodo) => {
             </IconButton>
           </>
         }
+        className='main-list__item'
         sx={{
           border: isTodoLate(getDateWithoutOffset(doneByDate.seconds))
             ? '1px solid red'
