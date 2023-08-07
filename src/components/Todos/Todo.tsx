@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { IconButton, ListItem, ListItemText } from '@mui/material';
+
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+
 import { handleDelete, handleUpdateToDone } from '../../firebase/todoApi';
+
+import { IconButton, ListItem, ListItemText } from '@mui/material';
 import Modal from '../Modals/Modal';
 import EditTodoForm from '../Forms/EditTodoForm';
 

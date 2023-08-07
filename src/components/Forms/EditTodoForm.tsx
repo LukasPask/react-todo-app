@@ -1,11 +1,14 @@
-import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { Controller, useForm } from 'react-hook-form';
-import { displayNotification } from '../../helpers/Notification';
+
 import { handleUpdate } from '../../firebase/todoApi';
+import { Controller, useForm } from 'react-hook-form';
+
+import { displayNotification } from '../../helpers/Notification';
+
+import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 
 import './index.scss';
 

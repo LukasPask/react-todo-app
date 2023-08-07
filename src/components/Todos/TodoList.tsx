@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import Todo from './Todo';
+import { Box, Button, List } from '@mui/material';
+
 import {
   collection,
   query,
@@ -9,7 +12,6 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import { db } from '../../firebase/firebase_setup';
-import { Box, Button, List } from '@mui/material';
 
 import './index.scss';
 
